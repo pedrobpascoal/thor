@@ -82,7 +82,10 @@
 		</jar>
 		<!-- update the jar in all project that have the project as dependency -->
 		<copy file="${package.file}" todir="../" overwrite="true" />
+		<copy file="${package.file}" todir="../view/lib/" overwrite="true" />
+		<copy file="${package.file}" todir="../../thor-demos/modelviewer/lib/" overwrite="true" />
 		<copy file="${package.file}" todir="../test/lib/" overwrite="true" />
+		<copy file="${package.file}" todir="../proj/lib/" overwrite="true" />
 	</target>
 
 	<!-- Create a jar package for the project containing all dependencies *.jar present in the lib/ folder -->

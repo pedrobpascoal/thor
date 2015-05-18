@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+import thor.graphics.Point3D;
 import thor.model.BufferedModel;
 import thor.model.geoset.BufferedMesh;
 

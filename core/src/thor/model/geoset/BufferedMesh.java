@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import thor.graphics.Point3D;
 import thor.graphics.Vector3D;
 import thor.model.geoset.Mesh;
 
@@ -20,11 +21,29 @@ public class BufferedMesh extends Mesh {
 		super();
 	}
 	
-	public void addVertex(double x, double y, double z) {
+	/**
+	 * Adds a vertex into the list of vertices of the mesh.
+	 * @param x
+	 * coordinate value of the vertex position in the x-axis
+	 * @param y
+	 * coordinate value of the vertex position in the y-axis
+	 * @param z
+	 * coordinate value of the vertex position in the z-axis
+	 * @return
+	 * the index of the added vertex
+	 */
+	public int addVertex(double x, double y, double z) {
 		Vertex v = new Vertex(x, y, z);
-		this.addVertex(v);
+		return this.addVertex(v);
 	}
-	public void addVertex(Vertex v) {
+	/**
+	 * Adds a vertex into the list of vertices of the mesh.
+	 * @param v
+	 * vertex to add to the list of vertices
+	 * @return
+	 * the index of the added vertex
+	 */
+	public int addVertex(Vertex v) {
 		if(v.getX() > _maxVertex.getX()) _maxVertex.setLocation(v.getX(), _maxVertex.getY(), _maxVertex.getZ());
 		if(v.getY() > _maxVertex.getY()) _maxVertex.setLocation(_maxVertex.getX(), v.getY(), _maxVertex.getZ());
 		if(v.getZ() > _maxVertex.getZ()) _maxVertex.setLocation(_maxVertex.getX(), _maxVertex.getY(), v.getZ());
@@ -33,7 +52,12 @@ public class BufferedMesh extends Mesh {
 		if(v.getY() < _minVertex.getY()) _minVertex.setLocation(_minVertex.getX(), v.getY(), _minVertex.getZ());
 		if(v.getZ() < _minVertex.getZ()) _minVertex.setLocation(_minVertex.getX(), _minVertex.getY(), v.getZ());
 		_vertices.add(v);
+		
+		//_verticesColor
+		_verticesColor.add(new Point3D.Float(0.0f, 0.0f, 0.0f));
+		return _vertices.size()-1;
 	}
+	
 	public void addTextCoord(float u, float v) {
 		Point2D p = new Point2D.Float();
 		p.setLocation(u, v);

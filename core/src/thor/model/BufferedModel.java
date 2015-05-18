@@ -16,10 +16,18 @@ public class BufferedModel extends Model {
 		super(name, extension);
 	}
 
+	/**
+	 * Adds a mesh to the list of Meshes of the Model 
+	 * @param mesh - polygon mesh that is to be added to the list of the Model
+	 */
 	public void addMesh(Mesh mesh) {
 		_meshes.add(mesh);
 	}
 	
+	/**
+	 * Adds a bone to the list of Bones of the Model 
+	 * @param bone - bone to be added to the list of the Model
+	 */
 	public void addBone(Bone bone) {
 		_bones.add(bone);
 		System.out.println("added bone:" + bone.getName() );

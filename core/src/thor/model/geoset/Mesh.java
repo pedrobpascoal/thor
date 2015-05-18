@@ -3,12 +3,15 @@ package thor.model.geoset;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
+*/
 
 import thor.graphics.Vector3D;
 import thor.graphics.Point3D;
@@ -20,6 +23,8 @@ import thor.graphics.Point3D;
  */
 public abstract class Mesh extends Object {
 	protected List<Vertex> _vertices = new ArrayList<Vertex>();		// list of vertices
+	protected List<Point3D> _verticesColor = new ArrayList<Point3D>();// list of colors of each vertice
+	
 	protected List<Point2D> _textCoord = new ArrayList<Point2D>();	// list of texture coordinates
 	protected List<Vector3D> _normals = new ArrayList<Vector3D>();	// list of normals
 	protected List<Face> _faces = new ArrayList<Face>(); 			// list of faces (triangles)
@@ -33,9 +38,14 @@ public abstract class Mesh extends Object {
 	}
 	/**
 	 * @return
-	 * A list of Vertex with all the vertices of the mesh.
+	 * A list of all the vertices of the mesh.
 	 */
 	public List<Vertex> getVertices() { return _vertices; }
+	/**
+	 * @return
+	 * A list of colors of each vertex of the mesh.
+	 */
+	public List<Point3D> getVerticesColor() { return _verticesColor; }
 	/**
 	 * @return
 	 * A list of Point2D with the texture coordinates for each of the vertices of the mesh.
@@ -146,7 +156,7 @@ public abstract class Mesh extends Object {
 	}
 	
 	public void calculateNormals() {
-		//MyTODO: ok... kinda of tired, so calculate only for 3 vertices, screw when there are 4...
+		//TODO: ok... kinda of tired, so calculate only for 3 vertices, screw when there are 4...
 		// i'll do it later, maybe calculate each face normal
 		for(Face face : _faces) {
 			Point3D p1 = _vertices.get(face.Vertices.get(0));
@@ -156,8 +166,15 @@ public abstract class Mesh extends Object {
 			Vector3D v1 = Vector3D.sub(p2, p1);
 			Vector3D v2 = Vector3D.sub(p3, p1);
 			
+			// Calc the weight of the normal
 			face.Normal = Vector3D.product(v1, v2);
 			face.Normal.normalize();
+
+			// TODO: remove the signal, keep only value: square(point.x * point.x)
+			
+			// TODO: need to decide the direction using the barycenter: vector = point2 - barycenter
+			// basically keep only the signal: point.x/ (square (point.x * point.x))
+			// all normals must be pointing outside
 			
 			for(int i : face.Vertices) {
 				Vertex v = _vertices.get(face.Vertices.get(i));
@@ -178,6 +195,8 @@ public abstract class Mesh extends Object {
 	
 
 	public Point3D getFaceCenter(Face face) {
+		// its being used by the CAH
+		// TODO: must find a better placement for this method
 		Point3D center = new Point3D.Double();
 		
 		for(int i : face.Vertices) {
@@ -188,6 +207,18 @@ public abstract class Mesh extends Object {
 		return center;
 	}
 	
+	/**
+	 * Assigns a color to a specific vertex
+	 * @param index
+	 * The index of the vertex that will be painted. Index of vertices start in 0.
+	 * @param color
+	 * The color to paint the vertex. Colors are in RGB format. E.g: (0, 0, 0) will be black.
+	 */
+	public void paintVertex(int index, Point3D color) {
+		if(_verticesColor.size() > index)
+			_verticesColor.set(index, color);
+	}
+	/*
 	public void draw(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
         for (Face face : _faces) {
@@ -197,13 +228,18 @@ public abstract class Mesh extends Object {
         		gl.glBegin(GL2.GL_TRIANGLES);
         	}
         	for(int i = 0; i < face.Vertices.size(); i++) {
+        		//prepare the color for painting the vertex
+        		gl.glColor3d(_verticesColor.get(face.Vertices.get(i)).getX(),
+        					 _verticesColor.get(face.Vertices.get(i)).getY(),
+        					 _verticesColor.get(face.Vertices.get(i)).getZ());
+        		//draw the vertex
         		gl.glVertex3d(	_vertices.get(face.Vertices.get(i)).getX(),
         						_vertices.get(face.Vertices.get(i)).getY(),
         						_vertices.get(face.Vertices.get(i)).getZ());
         	}
             gl.glEnd();
 		}
-	}
+	}*/
 	
 	public Point3D getBarycenter() {
 		return new Point3D.Double((_maxVertex.getX() + _minVertex.getX())/2,
@@ -212,19 +248,101 @@ public abstract class Mesh extends Object {
 	}
 	
 	public boolean isManifold() {
-		/* TODO: PO3D Pratica 1 - copy your code from the 1st part here
-		 */
-		return false;
+		Integer verticesSize = _vertices.size();
+		
+		/* Stores how many times a vertex is used across all the faces composing the Mesh */
+		ArrayList<Integer> vertexList = new ArrayList<Integer>(Collections.nCopies(verticesSize, 0));
+		/* Stores how many times an edge is used across all the faces composing the Mesh */
+		HashMap<Integer,Integer> edgeMap = new HashMap<Integer,Integer>();
+
+		for(Face face: _faces){
+			
+			for(int index=0; index < face.Vertices.size(); index++) {
+				
+				int index0 = index;
+				int index1 = (index + 1) % face.Vertices.size();
+				
+				/* The Map is initially empty */
+				if(edgeMap.containsKey(face.Vertices.get(index0) * verticesSize + face.Vertices.get(index1)) == false) {
+					
+					edgeMap.put(face.Vertices.get(index0) * verticesSize + face.Vertices.get(index1), 0);
+					edgeMap.put(face.Vertices.get(index1) * verticesSize + face.Vertices.get(index0), 0);
+				}
+
+				Integer edgeCounter = edgeMap.get(face.Vertices.get(index0) * verticesSize + face.Vertices.get(index1));
+				edgeCounter++;
+				
+				/* If an edge is shared by more than 2 faces then the Mesh is not manifold */
+				if(edgeCounter > 2)
+					return false;
+				
+				/* Update the number of occurences of the edge */
+				edgeMap.put(face.Vertices.get(index0) * verticesSize + face.Vertices.get(index1), edgeCounter);
+				edgeMap.put(face.Vertices.get(index1) * verticesSize + face.Vertices.get(index0), edgeCounter);
+				
+				Integer vertexCounter0 = vertexList.get(face.Vertices.get(index0));
+				vertexCounter0++;				
+				
+				/* Update the number of occurences of vertex 0 */
+				vertexList.set(face.Vertices.get(index0),vertexCounter0);
+				
+				Integer vertexCounter1 = vertexList.get(face.Vertices.get(index1));
+				vertexCounter1++;				
+				
+				/* Update the number of occurences of vertex 1 */
+				vertexList.set(face.Vertices.get(index1),vertexCounter1);				
+			}	
+		}
+		for(Integer vertexCounter: vertexList) {
+			/* If a vertex is shared by only 2 edges then the Mesh is not manifold */			
+			if(vertexCounter == 2)
+				return false;
+		}
+		return true;
 	}
 
 	public double getSurfaceArea() {
-		/* TODO: PO3D Pratica 1 - copy your code from the 1st part here
-		 */
-		return 0;
+		double area = 0.0;
+		for (Face face : _faces) {
+			area += getFaceArea(face);
+		}
+		return area;
+	}
+	
+	public double getFaceArea(Face face) {
+		double area = 0.0;
+		switch (face.Vertices.size()) {
+			case 3: area = triangleArea(face); break;
+			case 4: area = convexQuadArea(face); break;
+			default: break;
+		}
+		return area;
+	}
+	
+	private double triangleArea(final Face face) {
+		final Vertex v1 = _vertices.get(face.Vertices.get(0));
+		final Vertex v2 = _vertices.get(face.Vertices.get(1));
+		final Vertex v3 = _vertices.get(face.Vertices.get(2));
+		return heronFormula(v1, v2, v3);
+	}
+	private double convexQuadArea(final Face face) {
+		final Vertex v1 = _vertices.get(face.Vertices.get(0));
+		final Vertex v2 = _vertices.get(face.Vertices.get(1));
+		final Vertex v3 = _vertices.get(face.Vertices.get(2));
+		final Vertex v4 = _vertices.get(face.Vertices.get(3));
+		return heronFormula(v1, v2, v3) + heronFormula(v3, v4, v1);
+	}
+	private double heronFormula(final Vertex v1, final Vertex v2, final Vertex v3) {
+		final double a =  Vector3D.distance(v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
+		final double b =  Vector3D.distance(v2.x, v2.y, v2.z, v3.x, v3.y, v3.z);
+		final double c =  Vector3D.distance(v3.x, v3.y, v3.z, v1.x, v1.y, v1.z);
+		final double s = (a + b + c) * 0.5; // semiperimeter
+		final double area = Math.sqrt(s*(s-a)*(s-b)*(s-c));
+		return area;
 	}
 
 	public Mesh getConvexHull() {
-		/* TODO: PO3D Pratica 1 - create and return the convex hull
+		/* PO3D Pratica 1 - create and return the convex hull
 		 * return a new mesh that is the convex hull of the original
 		 */
 		return null;

@@ -36,9 +36,12 @@ public abstract class Point3D extends Object implements Cloneable {
 	
 	/**
 	 * Sets the location of this Point2D to the specified double coordinates.
-	 * @param x - the X coordinate of the newly constructed Point3D.
-	 * @param y - the Y coordinate of the newly constructed Point3D.
-	 * @param z - the Z coordinate of the newly constructed Point3D.
+	 * @param x
+	 * the X coordinate of the newly constructed Point3D.
+	 * @param y
+	 * the Y coordinate of the newly constructed Point3D.
+	 * @param z
+	 * the Z coordinate of the newly constructed Point3D.
 	 */
 	public abstract void setLocation(double x, double y, double z);
 	
@@ -65,9 +68,12 @@ public abstract class Point3D extends Object implements Cloneable {
 		}
 		/**
 		 * Constructs and initializes a Point3D with the specified coordinates.
-		 * @param x - the X coordinate of the newly constructed Point3D.
-		 * @param y - the Y coordinate of the newly constructed Point3D.
-		 * @param z - the Z coordinate of the newly constructed Point3D.
+		 * @param x
+		 * the X coordinate of the newly constructed Point3D.
+		 * @param y
+		 * the Y coordinate of the newly constructed Point3D.
+		 * @param z
+		 * the Z coordinate of the newly constructed Point3D.
 		 */
 		public Float(float x, float y, float z) {
 			this.x = x;
@@ -115,9 +121,12 @@ public abstract class Point3D extends Object implements Cloneable {
 		}
 		/**
 		 * Constructs and initializes a Point3D with the specified coordinates.
-		 * @param x - the X coordinate of the newly constructed Point3D.
-		 * @param y - the Y coordinate of the newly constructed Point3D.
-		 * @param z - the Z coordinate of the newly constructed Point3D.
+		 * @param x
+		 * the X coordinate of the newly constructed Point3D.
+		 * @param y
+		 * the Y coordinate of the newly constructed Point3D.
+		 * @param z
+		 * the Z coordinate of the newly constructed Point3D.
 		 */
 		public Double(double x, double y, double z) {
 			this.x = x;
@@ -141,7 +150,8 @@ public abstract class Point3D extends Object implements Cloneable {
 	
 	/**
 	 * Returns the distance from this Point3D to a specified Point3D. Also known as the euclidean distance (L-2).
-	 * @param pt - the specified point to be measured against this Point3D
+	 * @param pt
+	 * the specified point to be measured against this Point3D
 	 * @return
 	 * the distance between this Point3D and the specified Point3D.
 	 */
@@ -150,12 +160,18 @@ public abstract class Point3D extends Object implements Cloneable {
 	}
 	/**
 	 * Returns the distance between two points. Also known as the euclidean distance (L-2).
-	 * @param x1 - the X coordinate of the first specified point
-	 * @param y1 - the Y coordinate of the first specified point
-	 * @param z1 - the Z coordinate of the first specified point
-	 * @param x2 - the X coordinate of the second specified point
-	 * @param y2 - the Y coordinate of the second specified point
-	 * @param z2 - the Z coordinate of the second specified point
+	 * @param x1
+	 * the X coordinate of the first specified point
+	 * @param y1
+	 * the Y coordinate of the first specified point
+	 * @param z1
+	 * the Z coordinate of the first specified point
+	 * @param x2
+	 * the X coordinate of the second specified point
+	 * @param y2
+	 * the Y coordinate of the second specified point
+	 * @param z2
+	 * the Z coordinate of the second specified point
 	 * @return
 	 * The distance between the two sets of specified coordinates.
 	 */
@@ -164,7 +180,8 @@ public abstract class Point3D extends Object implements Cloneable {
 	}
 	/**
 	 * Returns the square of the distance from this Point3D to a specified Point3D.
-	 * @param pt - the specified point to be measured against this Point3D
+	 * @param pt
+	 * the specified point to be measured against this Point3D
 	 * @return
 	 * the square of the distance between this Point3D to a specified Point3D.
 	 */
@@ -173,9 +190,12 @@ public abstract class Point3D extends Object implements Cloneable {
 	}
 	/**
 	 * Returns the square of the distance from this Point3D to a specified point.
-	 * @param px - the X coordinate of the specified point to be measured against this Point3D
-	 * @param py - the Y coordinate of the specified point to be measured against this Point3D
-	 * @param py - the Z coordinate of the specified point to be measured against this Point3D
+	 * @param px
+	 * the X coordinate of the specified point to be measured against this Point3D
+	 * @param py
+	 * the Y coordinate of the specified point to be measured against this Point3D
+	 * @param pz
+	 * the Z coordinate of the specified point to be measured against this Point3D
 	 * @return
 	 * the square of the distance between this Point3D and the specified point.
 	 */
@@ -188,7 +208,8 @@ public abstract class Point3D extends Object implements Cloneable {
 	
 	/**
 	 * Adds a Point3D coordinates values to this Point3D. 
-	 * @param pt - the specified point to add to this Point3D
+	 * @param pt
+	 * the specified point to add to this Point3D
 	 */
 	public void add(Point3D pt) {
 		this.setLocation(this.getX() + pt.getX(),
@@ -197,7 +218,8 @@ public abstract class Point3D extends Object implements Cloneable {
 	}
 	/**
 	 * Subs a Point3D coordinates values to this Point3D. 
-	 * @param pt - the specified point to sub to this Point3D
+	 * @param pt 
+	 * the specified point to sub to this Point3D
 	 */
 	public void sub(Point3D pt) {
 		this.setLocation(this.getX() - pt.getX(),
@@ -206,8 +228,8 @@ public abstract class Point3D extends Object implements Cloneable {
 	}
 	/**
 	 * Multiples each coordinate with a value.
-	 * @param value - value to multiple each coordinate with
-	 * @return
+	 * @param value
+	 * used to multiple each coordinate
 	 */
 	public void mul(double value) {
 		this.setLocation(this.getX() * value,
@@ -217,6 +239,7 @@ public abstract class Point3D extends Object implements Cloneable {
 	/**
 	 * Divides each coordinate of the Point3D with a specific value.
 	 * @param value
+	 * used to divide each coordinate
 	 */
 	public void div(int value) {
 		this.setLocation(this.getX() / value,

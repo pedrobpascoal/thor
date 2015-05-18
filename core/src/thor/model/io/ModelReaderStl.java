@@ -27,7 +27,8 @@ class ModelReaderStl extends ModelReader {
 		
 		int v_index = 0;
 		float n_index = 0;
-		try (Scanner scanner = new Scanner(new FileReader(filename));) {
+		try {
+			Scanner scanner = new Scanner(new FileReader(filename));
 			scanner.useLocale(Locale.US);
 			while (scanner.hasNextLine()) {
 				if(scanner.findInLine("solid") != null ) {
@@ -80,6 +81,8 @@ class ModelReaderStl extends ModelReader {
 					}
 				}
 			}
+		} catch(Exception e) {
+			
 		}
 		model.addMesh(mesh);
 		return model;

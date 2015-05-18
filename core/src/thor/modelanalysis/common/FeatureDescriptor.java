@@ -3,13 +3,22 @@ package thor.modelanalysis.common;
 
 import thor.Model;
 
-public interface FeatureDescriptor {
+/**
+ * This is the basic interface for all content based features.
+ *
+ * @author Pedro B. Pascoal
+ */
+public abstract class FeatureDescriptor {
+	protected final double MAX_PIXEL = 1000;	// default
+	protected final double MIN_PIXEL = -1000;	// default
 	
-    public void extract(Model model);
+    public abstract void extract(Model model);
 
-    public double[] getHistogram();
+    public abstract double[] getHistogram();
 
-    float compare(FeatureVector feature);
+    public abstract double compare(FeatureDescriptor feature);
 
-    java.lang.String printFeatureVector();
+	//static double compare(FeatureDescriptor f1, FeatureDescriptor f2);
+
+    public abstract java.lang.String printFeatureVector();
 }

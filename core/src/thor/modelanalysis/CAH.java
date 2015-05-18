@@ -2,11 +2,9 @@
 package thor.modelanalysis;
 
 import thor.Model;
-import thor.modelanalysis.common.FeatureVector;
 
-public class CAH implements FeatureVector {
+public class CAH {
 
-	@Override
 	public void extract(Model model) {
 		// TODO Auto-generated method stub
 		
@@ -77,14 +75,12 @@ public class CAH implements FeatureVector {
 		
 	}
 
-	@Override
 	public double[] getHistogram() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public float compare(FeatureVector feature) {
+	public float compare(double feature) {
 		// TODO Auto-generated method stub
 		
 		/*
@@ -110,7 +106,6 @@ public class CAH implements FeatureVector {
 		return 0;
 	}
 
-	@Override
 	public String printFeatureVector() {
 		// TODO Auto-generated method stub
 		return null;

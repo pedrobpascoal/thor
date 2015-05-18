@@ -24,8 +24,10 @@ public final class ModelIO extends Object {
 	 * @param file - an InputStream to read from.
 	 * @return
 	 * a BufferedModel containing the decoded contents of the input, or null.
-	 * @throws IllegalArgumentException - if input is null.
-	 * @throws IOException - if an error occurs during reading.
+	 * @throws IllegalArgumentException
+	 * if input is null.
+	 * @throws IOException
+	 * if an error occurs during reading.
 	 */
 	public static BufferedModel read(File file) throws IOException, IllegalArgumentException {
 		if(file == null)
@@ -68,8 +70,10 @@ public final class ModelIO extends Object {
 	 * @param output - a File to be written to.
 	 * @return
 	 * false if no appropriate writer is found.
-	 * @throws IllegalArgumentException - if any parameter is null.
-	 * @throws IOException - if an error occurs during writing.
+	 * @throws IllegalArgumentException
+	 * if any parameter is null.
+	 * @throws IOException
+	 * if an error occurs during writing.
 	 */
 	public static boolean write(Model model, OutputFormat format, File output) throws IOException, IllegalArgumentException {
 		if(output == null)
@@ -98,8 +102,10 @@ public final class ModelIO extends Object {
 	 * @param output - a File to be written to.
 	 * @return
 	 * false if no appropriate writer is found.
-	 * @throws IllegalArgumentException - if any parameter is null.
-	 * @throws IOException - if an error occurs during writing.
+	 * @throws IllegalArgumentException
+	 * if any parameter is null.
+	 * @throws IOException
+	 * if an error occurs during writing.
 	 */
 	public static boolean write(Model model, String formatName, File output) throws IOException, IllegalArgumentException {
 		if(output == null)

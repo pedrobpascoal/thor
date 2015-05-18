@@ -27,10 +27,9 @@ public abstract class ModelReader extends Object {
 	
 	/**
 	 * This method receives the full path of a model file, reads its contents and builds an instance of Model.
-	 * @param filename
-	 * The full path of the model file.
+	 * @param filename - the full path of the model file.
 	 * @return An instance of Model, built from the file contents.
-	 * @throws IOException - if file doesn't exist, or format not recognized.
+	 * @throws IOException if file doesn't exist, or format not recognized.
 	 */
 	public abstract BufferedModel read(String filename) throws IOException;
 	

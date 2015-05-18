@@ -8,22 +8,33 @@ package thor.graphics;
  * @author Pedro B. Pascoal
  */
 public class Vector3D extends Point3D {
+	/**the X coordinate of the Vector*/
 	private double x;
+	/**the Y coordinate of the Vector*/
 	private double y;
+	/**the Z coordinate of the Vector*/
 	private double z;
 	
 	/** Constructs and initializes a Vector3D with coordinates (0, 0, 0).*/
 	public Vector3D() {
 		this(0.0);
 	}
+	/**
+	 * Constructs and initializes a Vector3D with coordinates (value, value, value).
+	 * @param value
+	 * the specific value in which the vector is initialized
+	 */
 	protected Vector3D(double value) {
 		this(value, value, value);
 	}
 	/**
 	 * Constructs and initializes a Vector3D with the specified coordinates.
-	 * @param x - the X coordinate of the newly constructed Vector3D.
-	 * @param y - the Y coordinate of the newly constructed Vector3D.
-	 * @param z - the Z coordinate of the newly constructed Vector3D.
+	 * @param x
+	 * the X coordinate of the newly constructed Vector3D.
+	 * @param y
+	 * the Y coordinate of the newly constructed Vector3D.
+	 * @param z
+	 * the Z coordinate of the newly constructed Vector3D.
 	 */
 	public Vector3D(double x, double y, double z) {
 		this.x = x;
@@ -43,19 +54,24 @@ public class Vector3D extends Point3D {
 		}
 	}
 	/**
-	 * Get the dot product of vt and this object and return it.
-	 * @param vt - the specified Vector3D to be calculated the dot product against this Vector3D
+	 *  
+	 * @param vt
+	 * the specified Vector3D to be calculated the dot product against this Vector3D
 	 * @return
+	 * the dot product of vt and this object and return it.
 	 */
 	public double DotProduct3(Vector3D vt)
 	{
 	   return this.x * vt.x + this.y * vt.y + this.z * vt.z;
 	}
 	/**
-	 * Calculates the vector cross product of two vectors.
+	 * 
 	 * @param v1
+	 * the first Vector3D to be used.
 	 * @param v2
+	 * the second Vector3D to be used.
 	 * @return
+	 * the vector of the cross product of the two vectors
 	 */
 	public static Vector3D product(Vector3D v1, Vector3D v2) {
 		Vector3D result = new Vector3D(	(v1.y * v2.z) - (v1.z * v2.y),
@@ -64,8 +80,9 @@ public class Vector3D extends Point3D {
 		return result;
 	}
 	/**
-	 * Calculate the length of a vector.
+	 * 
 	 * @return
+	 * the length of a vector.
 	 */
 	public double lenght() {
 		return Math.sqrt(this.x * this.x +
@@ -75,9 +92,12 @@ public class Vector3D extends Point3D {
 	
 	/**
 	 * Vector3D Addition. Sum of each of their coordinates. 
-	 * @param v1 - the first Vector3D to be used.
-	 * @param v2 - the second Vector3D to be used.
-	 * @return Returns a Vector3D of the resulting addition
+	 * @param v1
+	 * the first Vector3D to be used.
+	 * @param v2
+	 * the second Vector3D to be used.
+	 * @return
+	 * a Vector3D of the resulting addition
 	 */
 	public static Vector3D add(Vector3D v1, Vector3D v2) {
 		Vector3D result = new Vector3D( v1.getX() + v2.getX(),
@@ -88,10 +108,12 @@ public class Vector3D extends Point3D {
 	
 	/**
 	 * Vector3D Subtraction. Subs in each of their coordinates. 
-	 * @param p1 - the first Point3D to be used.
-	 * @param p2 - the second Point3D to be used.
+	 * @param p1
+	 * the first Point3D to be used.
+	 * @param p2
+	 * the second Point3D to be used.
 	 * @return
-	 * Returns a Vector3D of the resulting substration.
+	 * a Vector3D of the resulting substration.
 	 */
 	public static Vector3D sub(Point3D p1, Point3D p2) {
 		Vector3D result = new Vector3D( p1.getX() - p2.getX(),
@@ -101,8 +123,9 @@ public class Vector3D extends Point3D {
 	}
 	
 	/**
-	 * Calculate the angle of a vector to the xy plan.
+	 * 
 	 * @return
+	 * the angle of a vector to the XOY plan.
 	 */
 	public double getAngleXY() {
 		double l = this.lenght();
@@ -111,8 +134,8 @@ public class Vector3D extends Point3D {
 		return Math.asin(this.z/l);
 	}
 	/**
-	 * Calculate the angle of a vector to the xz plan.
 	 * @return
+	 * the angle of a vector to the XOZ plan.
 	 */
 	public double getAngleXZ() {
 		double l = this.lenght();
@@ -121,8 +144,9 @@ public class Vector3D extends Point3D {
 		return Math.asin(this.y/l);
 	}
 	/**
-	 * Calculate the angle of a vector to the yz plan.
+	 * 
 	 * @return
+	 * the angle of a vector to the YOZ plan.
 	 */
 	public double getAngleYZ() {
 		double l = this.lenght();
@@ -131,9 +155,11 @@ public class Vector3D extends Point3D {
 		return Math.asin(this.x/l);
 	}
 	/**
-	 * Calculate the angle between one vector to another.
+	 *  
 	 * @param v
+	 * vector to calculate the angle to.
 	 * @return
+	 * the angle between one vector to another.
 	 */
 	public double angleBetweenVectors(Vector3D v) {
 		//calculate the lengths of two vectors	
