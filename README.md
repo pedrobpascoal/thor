@@ -3,6 +3,8 @@ ThOR
 
 ThOR (Three-dimensional Object Retrieval) is a simple and centralized library for 3D shape analysis, classification and retrieval, that allows researchers and practioners to use, compare and combine techniques and tools. Furthermore, our solution also enables researchers to easily add their algorithms to the library, further expanding the number of available tools for 3D object analysis and retrieval. 
 
+> <p align="center"><img width=300 src ="https://dl.dropboxusercontent.com/u/15906400/content/images/thor/preview.png" /></p>
+
 **Wiki & Documentation**
 
 Documentation and help are available:
